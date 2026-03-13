@@ -48,6 +48,7 @@ const menuItems: MenuItem[] = [
           { label: 'Progressbar', path: '/components/progressbar' },
           { label: 'Radio', path: '/components/radio' },
           { label: 'Rating', path: '/components/rating' },
+          { label: 'Dropdown Item', path: '/components/dropdown-item' },
           { label: 'Select', path: '/components/select' },
           { label: 'Spinner', path: '/components/spinner' },
           { label: 'Switch', path: '/components/switch' },
@@ -62,6 +63,7 @@ const menuItems: MenuItem[] = [
           { label: 'Accordion', path: '/components/accordion' },
           { label: 'Calendar', path: '/components/calendar' },
           { label: 'Card', path: '/components/card' },
+          { label: 'Form Select', path: '/components/form-select' },
           { label: 'FormField', path: '/components/form-field' },
           { label: 'Modal', path: '/components/modal' },
           { label: 'Stepper', path: '/components/stepper' },
@@ -122,72 +124,31 @@ function isGroupExpanded(label: string) {
       <div class="docs-sidebar__overlay" @click="mobileMenuOpen = false" />
       <nav class="docs-sidebar__nav">
         <template v-for="item in menuItems" :key="item.label">
-          <!-- Item with children (group) -->
           <div v-if="item.children" class="docs-nav-group">
-            <button
-              class="docs-nav-group__header"
-              :class="{ 'docs-nav-group__header--expanded': isGroupExpanded(item.label) }"
-              @click="toggleGroup(item.label)"
-            >
+            <button class="docs-nav-group__header" :class="{ 'docs-nav-group__header--expanded': isGroupExpanded(item.label) }" @click="toggleGroup(item.label)">
               <span class="docs-nav-group__label">{{ item.label }}</span>
-              <BrIcon
-                name="chevron-down"
-                size="sm"
-                class="docs-nav-group__icon"
-                :class="{ 'docs-nav-group__icon--rotated': isGroupExpanded(item.label) }"
-              />
+              <BrIcon name="chevron-down" size="sm" class="docs-nav-group__icon" :class="{ 'docs-nav-group__icon--rotated': isGroupExpanded(item.label) }" />
             </button>
             <div v-show="isGroupExpanded(item.label)" class="docs-nav-group__content">
               <template v-for="child in item.children" :key="child.label">
-                <!-- Nested group -->
                 <div v-if="child.children" class="docs-nav-subgroup">
-                  <button
-                    class="docs-nav-subgroup__header"
-                    :class="{ 'docs-nav-subgroup__header--expanded': isGroupExpanded(child.label) }"
-                    @click="toggleGroup(child.label)"
-                  >
+                  <button class="docs-nav-subgroup__header" :class="{ 'docs-nav-subgroup__header--expanded': isGroupExpanded(child.label) }" @click="toggleGroup(child.label)">
                     <span>{{ child.label }}</span>
-                    <BrIcon
-                      name="chevron-down"
-                      size="sm"
-                      class="docs-nav-subgroup__icon"
-                      :class="{ 'docs-nav-subgroup__icon--rotated': isGroupExpanded(child.label) }"
-                    />
+                    <BrIcon name="chevron-down" size="sm" class="docs-nav-subgroup__icon" :class="{ 'docs-nav-subgroup__icon--rotated': isGroupExpanded(child.label) }" />
                   </button>
                   <div v-show="isGroupExpanded(child.label)" class="docs-nav-subgroup__content">
-                    <router-link
-                      v-for="subChild in child.children"
-                      :key="subChild.path"
-                      :to="subChild.path!"
-                      class="docs-nav-link docs-nav-link--nested"
-                      :class="{ 'docs-nav-link--active': isActive(subChild.path!) }"
-                      @click="mobileMenuOpen = false"
-                    >
+                    <router-link v-for="subChild in child.children" :key="subChild.path" :to="subChild.path!" class="docs-nav-link docs-nav-link--nested" :class="{ 'docs-nav-link--active': isActive(subChild.path!) }" @click="mobileMenuOpen = false">
                       {{ subChild.label }}
                     </router-link>
                   </div>
                 </div>
-                <!-- Direct child link -->
-                <router-link
-                  v-else
-                  :to="child.path!"
-                  class="docs-nav-link"
-                  :class="{ 'docs-nav-link--active': isActive(child.path!) }"
-                  @click="mobileMenuOpen = false"
-                >
+                <router-link v-else :to="child.path!" class="docs-nav-link" :class="{ 'docs-nav-link--active': isActive(child.path!) }" @click="mobileMenuOpen = false">
                   {{ child.label }}
                 </router-link>
               </template>
             </div>
           </div>
-          <!-- Single item -->
-          <router-link
-            v-else
-            :to="item.path!"
-            class="docs-nav-link docs-nav-link--root"
-            :class="{ 'docs-nav-link--active': isActive(item.path!) }"
-            @click="mobileMenuOpen = false"
-          >
+          <router-link v-else :to="item.path!" class="docs-nav-link docs-nav-link--root" :class="{ 'docs-nav-link--active': isActive(item.path!) }" @click="mobileMenuOpen = false">
             {{ item.label }}
           </router-link>
         </template>
@@ -210,10 +171,6 @@ function isGroupExpanded(label: string) {
   min-height: 100vh;
   background: var(--neutralLightGrey7);
 }
-
-// =============================================================================
-// HEADER
-// =============================================================================
 
 .docs-header {
   position: fixed;
@@ -290,10 +247,6 @@ function isGroupExpanded(label: string) {
   }
 }
 
-// =============================================================================
-// SIDEBAR
-// =============================================================================
-
 .docs-sidebar {
   position: fixed;
   top: 64px;
@@ -335,10 +288,6 @@ function isGroupExpanded(label: string) {
     padding: var(--br-space-4);
   }
 }
-
-// =============================================================================
-// NAVIGATION
-// =============================================================================
 
 .docs-nav-group {
   margin-bottom: var(--br-space-2);
@@ -450,10 +399,6 @@ function isGroupExpanded(label: string) {
     font-size: var(--br-text-sm);
   }
 }
-
-// =============================================================================
-// MAIN CONTENT
-// =============================================================================
 
 .docs-main {
   flex: 1;

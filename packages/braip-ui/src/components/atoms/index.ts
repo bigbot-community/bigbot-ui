@@ -1,7 +1,3 @@
-// =============================================================================
-// BRAIP UI - ATOMS INDEX
-// =============================================================================
-
 export * from "./BrButton";
 export * from "./BrInput";
 export * from "./BrSelect";
@@ -21,3 +17,4 @@ export * from "./BrCheckbox";
 export * from "./BrInputRange";
 export * from "./BrInfoPopper";
 export * from "./BrLineDivision";
+export * from "./BrDropdownItem";
